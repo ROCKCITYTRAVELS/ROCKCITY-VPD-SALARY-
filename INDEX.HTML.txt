@@ -1,7 +1,7 @@
 <link rel="manifest" href="manifest.json">
  import { useState, useMemo, useEffect } from "react";
 
-// --- CONSTANTS ------------------------------------------------
+// ─── CONSTANTS ────────────────────────────────────────────────
 const MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 const DEPTS = ["Travels","Pharmaceutical"];
 const DESIGNATIONS = ["Driver","Manager","Accountant","Pharmacist","Delivery","Supervisor","Staff","Other"];
@@ -19,13 +19,13 @@ const INITIAL_EMPLOYEES = [
   { id:8, name:"Mr.Katharsha", basicSalary:3500, workingDays:29, dept:"Travels", designation:"Driver", mobile:"9876543217", empId:"RC008", joined:"2023-01-01", photo:"", role:"Employee" },
   { id:9, name:"Mr.Aarif", basicSalary:3500, workingDays:29, dept:"Travels", designation:"Driver", mobile:"9876543218", empId:"RC009", joined:"2023-01-01", photo:"", role:"Employee" },
   { id:10, name:"Mr.Vetri Selvan", basicSalary:3500, workingDays:29, dept:"Travels", designation:"Driver", mobile:"9876543219", empId:"RC010", joined:"2023-01-01", photo:"", role:"Employee" },
-  { id:11, name:"Mr.Alrasik", basicSalary:12500, workingDays:29, dept:"Travels", designation:"Manager", mobile:"9876543220", empId:"RC011", joined:"2022-06-01", photo:"", role:"Manager" },
+  { id:11, name:"Mr.Alrasik", basicSalary:12500, workingDays:29, dept:"Travels", designation:"Manager", mobile:"9003692628", empId:"RC011", joined:"2022-06-01", photo:"", role:"Manager" },
   { id:12, name:"Mr.Bhuvaneswari", basicSalary:15000, workingDays:26, dept:"Travels", designation:"Supervisor", mobile:"9876543221", empId:"RC012", joined:"2022-06-01", photo:"", role:"Employee" },
   { id:13, name:"Mrs.Kavitha", basicSalary:7500, workingDays:26, dept:"Travels", designation:"Staff", mobile:"9876543222", empId:"RC013", joined:"2022-06-01", photo:"", role:"Employee" },
   { id:101, name:"Mr.R.Manivannan", basicSalary:15000, workingDays:26, dept:"Pharmaceutical", designation:"Manager", mobile:"9876500001", empId:"PH001", joined:"2022-01-01", photo:"", role:"Manager" },
   { id:102, name:"Ms.Nivedha", basicSalary:15000, workingDays:26, dept:"Pharmaceutical", designation:"Pharmacist", mobile:"9876500002", empId:"PH002", joined:"2022-01-01", photo:"", role:"Employee" },
   { id:103, name:"Mr.Pushparaj", basicSalary:15000, workingDays:26, dept:"Pharmaceutical", designation:"Delivery", mobile:"9876500003", empId:"PH003", joined:"2022-01-01", photo:"", role:"Employee" },
-  { id:104, name:"Mr.Saravanan", basicSalary:12000, workingDays:26, dept:"Pharmaceutical", designation:"Delivery", mobile:"9876500004", empId:"PH004", joined:"2022-01-01", photo:"", role:"Employee" },
+  { id:104, name:"Mr.Alrasik", basicSalary:6500, workingDays:31, dept:"Pharmaceutical", designation:"Manager", mobile:"9003692628", empId:"PH004", joined:"2022-01-01", photo:"", role:"Employee" },
   { id:105, name:"Mrs.Kavitha", basicSalary:7500, workingDays:26, dept:"Pharmaceutical", designation:"Staff", mobile:"9876500005", empId:"PH005", joined:"2022-01-01", photo:"", role:"Employee" },
   { id:106, name:"Mrs.Umadevi", basicSalary:2500, workingDays:26, dept:"Pharmaceutical", designation:"Staff", mobile:"9876500006", empId:"PH006", joined:"2022-01-01", photo:"", role:"Employee" },
 ];
@@ -46,33 +46,34 @@ const emptyEntry = () => ({ presentDays:"", collection:"", db:"", pf:"465", gf:"
 // WhatsApp helpers
 function buildWASlip(emp, entry, calc, wd, month, year) {
   const mn = MONTHS[month];
-  return `+-------------------+
-�  ?? ROCKCITY SALARY SLIP  �
-+-------------------+
+  return `
+╔═══════════════════════════╗
+║  💼 ROCKCITY SALARY SLIP  ║
+╚═══════════════════════════╝
 
-?? ${emp.name}
-?? ID: ${emp.empId}  |  ?? ${emp.mobile}
-?? ${emp.dept} � ${emp.designation}
-?? Month: ${mn} ${year}
+👤 ${emp.name}
+🆔 ID: ${emp.empId}  |  📱 ${emp.mobile}
+🏢 ${emp.dept} — ${emp.designation}
+📅 Month: ${mn} ${year}
 
-????????????????????????
-?? Basic Salary     : ?${emp.basicSalary}
-?? Working Days     : ${wd}
-? Present Days     : ${entry.presentDays||0}
-?? Salary           : ?${calc.salaryForMonth}
-?? Collection       : ?${entry.collection||0}
-?? DB               : ?${entry.db||0}
-????????????????????????
-?? Gross Salary    : ?${calc.grossSalary}
-????????????????????????
-?? PF               : ?${entry.pf||0}
-?? GF               : ?${entry.gf||0}
-?? Advance          : ?${entry.salaryAdvance||0}
-?? Total Deduction  : ?${calc.totalDeduction}
-????????????????????????
-? NET SALARY      : ?${calc.roundOff}
-????????????????????????
-?? Rockcity Call Taxi & Travels
+━━━━━━━━━━━━━━━━━━━━━━━━
+💰 Basic Salary     : ₹${emp.basicSalary}
+📆 Working Days     : ${wd}
+✅ Present Days     : ${entry.presentDays||0}
+💵 Salary           : ₹${calc.salaryForMonth}
+📦 Collection       : ₹${entry.collection||0}
+🎯 DB               : ₹${entry.db||0}
+━━━━━━━━━━━━━━━━━━━━━━━━
+📊 Gross Salary    : ₹${calc.grossSalary}
+━━━━━━━━━━━━━━━━━━━━━━━━
+🔻 PF               : ₹${entry.pf||0}
+🔻 GF               : ₹${entry.gf||0}
+🔻 Advance          : ₹${entry.salaryAdvance||0}
+🔻 Total Deduction  : ₹${calc.totalDeduction}
+━━━━━━━━━━━━━━━━━━━━━━━━
+✨ NET SALARY      : ₹${calc.roundOff}
+━━━━━━━━━━━━━━━━━━━━━━━━
+🚖 Rockcity Call Taxi & Travels
 This is your official salary slip`;
 }
 function openWA(mobile, text) {
@@ -81,7 +82,7 @@ function openWA(mobile, text) {
   window.open(https://wa.me/${num}?text=${encodeURIComponent(text)}, "_blank");
 }
 
-// --- THEME -----------------------------------------------------
+// ─── THEME ─────────────────────────────────────────────────────
 const LIGHT = {
   bg:"#f0f4f8", card:"#ffffff", navy:"#1e3a5f", blue:"#2d6a9f",
   text:"#1a202c", subtext:"#718096", border:"#e2e8f0",
@@ -97,7 +98,7 @@ const DARK = {
   tabActive:"#38bdf8", tabBg:"#1e293b", rowAlt:"#172033",
 };
 
-// --- TRANSLATIONS -----------------------------------------------
+// ─── TRANSLATIONS ───────────────────────────────────────────────
 const TR = {
   en: {
     appName:"Rockcity Employee Salary Manager", dashboard:"Dashboard", employees:"Employees",
@@ -121,29 +122,29 @@ const TR = {
     startSending:"Start Sending", noMobile:"Mobile number missing",
   },
   ta: {
-    appName:"?????????? ????? ????????", dashboard:"??????????", employees:"?????????",
-    salary:"????? ????", attendance:"?????", advances:"????????", reports:"??????????",
-    totalEmployees:"????? ?????????", monthlySalary:"??? ???????", pendingSalary:"??????",
-    totalAdvance:"????? ????????", addEmployee:"?????? ????", editEmployee:"????????",
-    salarySheet:"????? ????", department:"????", designation:"????",
-    basicSalary:"???????? ???????", workingDays:"??? ???????", presentDays:"???? ???????",
-    collection:"?????????", grossSalary:"????? ???????", netSalary:"???? ???????",
-    roundOff:"??????? ????", totalDeduction:"????? ?????", share:"?????",
-    print:"???????", save:"????", cancel:"?????", delete:"??????", edit:"????????",
-    name:"?????", mobile:"??????", empId:"???", joined:"??????? ????", role:"????????",
-    all:"?????????", travels:"?????????", pharma:"???????", darkMode:"?????? ????",
-    language:"????", advance:"????????", advanceHistory:"??????",
-    giveAdvance:"???????? ????", amount:"????", reason:"??????", date:"????",
-    markAttendance:"????? ?????", present:"???????", absent:"????????",
-    halfDay:"??? ????", leave:"????????", monthlyReport:"??? ???????",
-    salarySlip:"????? ??????", close:"????", copied:"?????????????????!", noData:"???? ?????",
-    whatsapp:"????????? ???????", sendOne:"????????? ???????", sendAll:"???????????? ???????",
-    bulkSend:"???????????? ?????????", selectAll:"??????????? ??????", clear:"???", preview:"???????????",
-    startSending:"??????? ???????", noMobile:"?????? ?????",
+    appName:"ராக்சிட்டி சம்பள மேலாண்மை", dashboard:"டாஷ்போர்டு", employees:"ஊழியர்கள்",
+    salary:"சம்பள தாள்", attendance:"வருகை", advances:"முன்பணம்", reports:"அறிக்கைகள்",
+    totalEmployees:"மொத்த ஊழியர்கள்", monthlySalary:"மாத சம்பளம்", pendingSalary:"நிலுவை",
+    totalAdvance:"மொத்த முன்பணம்", addEmployee:"ஊழியர் சேர்", editEmployee:"திருத்து",
+    salarySheet:"சம்பள தாள்", department:"துறை", designation:"பதவி",
+    basicSalary:"அடிப்படை சம்பளம்", workingDays:"பணி நாட்கள்", presentDays:"வந்த நாட்கள்",
+    collection:"கலெக்‌ஷன்", grossSalary:"மொத்த சம்பளம்", netSalary:"நிகர சம்பளம்",
+    roundOff:"ரவுண்ட் ஆஃப்", totalDeduction:"மொத்த கழிவு", share:"பகிர்",
+    print:"அச்சிடு", save:"சேமி", cancel:"ரத்து", delete:"நீக்கு", edit:"திருத்து",
+    name:"பெயர்", mobile:"மொபைல்", empId:"ஐடி", joined:"சேர்ந்த தேதி", role:"பொறுப்பு",
+    all:"அனைத்தும்", travels:"டிராவல்ஸ்", pharma:"மருந்து", darkMode:"டார்க் மோடு",
+    language:"மொழி", advance:"முன்பணம்", advanceHistory:"வரலாறு",
+    giveAdvance:"முன்பணம் கொடு", amount:"தொகை", reason:"காரணம்", date:"தேதி",
+    markAttendance:"வருகை பதிவு", present:"வந்தார்", absent:"வரவில்லை",
+    halfDay:"அரை நாள்", leave:"விடுப்பு", monthlyReport:"மாத அறிக்கை",
+    salarySlip:"சம்பள சீட்டு", close:"மூடு", copied:"நகலெடுக்கப்பட்டது!", noData:"தரவு இல்லை",
+    whatsapp:"வாட்ஸ்அப் அனுப்பு", sendOne:"வாட்ஸ்அப் அனுப்பு", sendAll:"அனைவருக்கும் அனுப்பு",
+    bulkSend:"அனைவருக்கும் வாட்ஸ்அப்", selectAll:"அனைத்தையும் தேர்வு", clear:"அழி", preview:"முன்னோட்டம்",
+    startSending:"அனுப்பு தொடங்கு", noMobile:"மொபைல் இல்லை",
   }
 };
 
-// --- MAIN APP --------------------------------------------------
+// ─── MAIN APP ──────────────────────────────────────────────────
 export default function App() {
   const [tab, setTab] = useState("dashboard");
   const [dark, setDark] = useState(false);
@@ -234,15 +235,15 @@ export default function App() {
     if (!empForm.name?.trim()) return;
     if (editEmp) {
       setEmployees(p=>p.map(e=>e.id===editEmp.id?{...e,...empForm,basicSalary:Number(empForm.basicSalary),workingDays:Number(empForm.workingDays)}:e));
-      showToast("? "+T.save+"d!");
+      showToast("✅ "+T.save+"d!");
     } else {
       const newId = Math.max(0,...employees.map(e=>e.id))+1;
       setEmployees(p=>[...p,{...empForm,id:newId,basicSalary:Number(empForm.basicSalary),workingDays:Number(empForm.workingDays)}]);
-      showToast("? Added!");
+      showToast("✅ Added!");
     }
     setEmpModal(false);
   };
-  const delEmp = (id) => { if(!window.confirm("Delete?"))return; setEmployees(p=>p.filter(e=>e.id!==id)); showToast("??? Deleted!"); };
+  const delEmp = (id) => { if(!window.confirm("Delete?"))return; setEmployees(p=>p.filter(e=>e.id!==id)); showToast("🗑️ Deleted!"); };
 
   // Advance
   const giveAdvance = () => {
@@ -253,7 +254,7 @@ export default function App() {
     // Also update salary entry advance
     const emp = employees.find(e=>e.id===Number(advForm.empId));
     if(emp){ const cur=getEntry(emp.id); const prev=Number(cur.salaryAdvance)||0; setField(emp.id,"salaryAdvance",String(prev+Number(advForm.amount))); }
-    showToast("? Advance added!");
+    showToast("✅ Advance added!");
     setAdvModal(false);
     setAdvForm({empId:"",amount:"",reason:"",date:todayStr});
   };
@@ -279,45 +280,45 @@ export default function App() {
   // Salary slip text
   const slipText = (emp, entry, calc, wd) => {
     const mn = MONTHS[month];
-    return `????????????????????????
-?? ROCKCITY SALARY SLIP
-????????????????????????
-?? ${emp.name}
-?? ${emp.empId} | ?? ${emp.mobile}
-?? ${emp.dept} � ${emp.designation}
-?? ${mn} ${year}
-????????????????????????
-?? Basic Salary    : ?${emp.basicSalary}
-?? Working Days    : ${wd}
-? Present Days    : ${entry.presentDays||0}
-?? Salary          : ?${calc.salaryForMonth}
-?? Collection      : ?${entry.collection||0}
-?? DB              : ?${entry.db||0}
-????????????????????????
-?? Gross Salary    : ?${calc.grossSalary}
-????????????????????????
-?? PF              : ?${entry.pf||0}
-?? GF              : ?${entry.gf||0}
-?? Advance         : ?${entry.salaryAdvance||0}
-?? Total Deduction : ?${calc.totalDeduction}
-????????????????????????
-? NET SALARY      : ?${calc.roundOff}
-????????????????????????
+    return `━━━━━━━━━━━━━━━━━━━━━━━━
+💼 ROCKCITY SALARY SLIP
+━━━━━━━━━━━━━━━━━━━━━━━━
+👤 ${emp.name}
+🆔 ${emp.empId} | 📱 ${emp.mobile}
+🏢 ${emp.dept} — ${emp.designation}
+📅 ${mn} ${year}
+━━━━━━━━━━━━━━━━━━━━━━━━
+💰 Basic Salary    : ₹${emp.basicSalary}
+📆 Working Days    : ${wd}
+✅ Present Days    : ${entry.presentDays||0}
+💵 Salary          : ₹${calc.salaryForMonth}
+📦 Collection      : ₹${entry.collection||0}
+🎯 DB              : ₹${entry.db||0}
+━━━━━━━━━━━━━━━━━━━━━━━━
+📊 Gross Salary    : ₹${calc.grossSalary}
+━━━━━━━━━━━━━━━━━━━━━━━━
+🔻 PF              : ₹${entry.pf||0}
+🔻 GF              : ₹${entry.gf||0}
+🔻 Advance         : ₹${entry.salaryAdvance||0}
+🔻 Total Deduction : ₹${calc.totalDeduction}
+━━━━━━━━━━━━━━━━━━━━━━━━
+✨ NET SALARY      : ₹${calc.roundOff}
+━━━━━━━━━━━━━━━━━━━━━━━━
 Rockcity Call Taxi & Travels`;
   };
 
   const doShare = async (emp, entry, calc, wd) => {
     const text = slipText(emp,entry,calc,wd);
     if(navigator.share){ try{await navigator.share({title:Salary - ${emp.name},text});}catch(e){} }
-    else { navigator.clipboard.writeText(text); showToast("?? "+T.copied); }
+    else { navigator.clipboard.writeText(text); showToast("📋 "+T.copied); }
     setShareModal(null);
   };
 
-  // --- WHATSAPP SEND --------------------------------------------
+  // ─── WHATSAPP SEND ────────────────────────────────────────────
   const sendOneWA = (emp, entry, calc, wd) => {
-    if (!emp.mobile || emp.mobile.replace(/\D/g,"").length < 10) { showToast("?? "+T.noMobile+": "+emp.name); return; }
+    if (!emp.mobile || emp.mobile.replace(/\D/g,"").length < 10) { showToast("⚠️ "+T.noMobile+": "+emp.name); return; }
     openWA(emp.mobile, buildWASlip(emp, entry, calc, wd, month, year));
-    showToast("? "+emp.name+" � WhatsApp opening...");
+    showToast("✅ "+emp.name+" — WhatsApp opening...");
   };
 
   const toggleBulkSelect = (id) => setBulkSelected(p => p.includes(id) ? p.filter(x=>x!==id) : [...p, id]);
@@ -326,7 +327,7 @@ Rockcity Call Taxi & Travels`;
 
   const startBulkSend = async () => {
     const selRows = rows.filter(r => bulkSelected.includes(r.emp.id));
-    if (!selRows.length) { showToast("?? Select employees first"); return; }
+    if (!selRows.length) { showToast("⚠️ Select employees first"); return; }
     setBulkModal(false);
     for (let i=0;i<selRows.length;i++) {
       const { emp, entry, calc, wd } = selRows[i];
@@ -337,10 +338,10 @@ Rockcity Call Taxi & Travels`;
       }
     }
     setBulkProgress(null);
-    showToast(? Sent to ${selRows.length} employees!);
+    showToast(✅ Sent to ${selRows.length} employees!);
   };
 
-  // --- STYLES -------------------------------------------------
+  // ─── STYLES ─────────────────────────────────────────────────
   const t = theme;
   const S = {
     app:{ fontFamily:"'Segoe UI',sans-serif", background:t.bg, minHeight:"100vh", color:t.text, maxWidth:1100, margin:"0 auto", transition:"all 0.2s" },
@@ -377,7 +378,7 @@ Rockcity Call Taxi & Travels`;
   const today = new Date().getDate();
   const daysInMonth = new Date(year, month+1, 0).getDate();
 
-  // --- RENDER -------------------------------------------------
+  // ─── RENDER ─────────────────────────────────────────────────
   return (
     <div style={S.app}>
       <style>{@media print{.no-print{display:none!important}body{background:#fff}}input::-webkit-inner-spin-button{-webkit-appearance:none}::-webkit-scrollbar{width:4px;height:4px}::-webkit-scrollbar-thumb{background:#888;border-radius:4px}}</style>
@@ -385,27 +386,27 @@ Rockcity Call Taxi & Travels`;
       {/* Header */}
       <div style={S.header} className="no-print">
         <div>
-          <div style={{ fontWeight:700, fontSize:15 }}>?? {T.appName}</div>
+          <div style={{ fontWeight:700, fontSize:15 }}>🚖 {T.appName}</div>
           <div style={{ fontSize:10, opacity:0.75, marginTop:1 }}>Rockcity Call Taxi & Travels | Pharma</div>
         </div>
         <div style={{ display:"flex", gap:8, alignItems:"center" }}>
           <button style={{ ...S.btn(dark?"#1e293b":"rgba(255,255,255,0.15)"), padding:"5px 10px", fontSize:11, border:"1px solid rgba(255,255,255,0.3)" }}
-            onClick={()=>setDark(!dark)}>{dark?"??":"??"}</button>
+            onClick={()=>setDark(!dark)}>{dark?"☀️":"🌙"}</button>
           <button style={{ ...S.btn(dark?"#1e293b":"rgba(255,255,255,0.15)"), padding:"5px 10px", fontSize:11, border:"1px solid rgba(255,255,255,0.3)" }}
-            onClick={()=>setLang(l=>l==="en"?"ta":"en")}>{lang==="en"?"?????":"EN"}</button>
+            onClick={()=>setLang(l=>l==="en"?"ta":"en")}>{lang==="en"?"தமிழ்":"EN"}</button>
         </div>
       </div>
 
       {/* Nav Tabs */}
       <div style={S.nav} className="no-print">
         {[
-  ["dashboard","??"],
-  ["employees","??"],
-  ["salary","??"],
-  ["attendance","??"],
-  ["advances","??"],
-  ["reports","??"],
-  ["whatsapp","??"]
+  ["dashboard","🏠"],
+  ["employees","👥"],
+  ["salary","📊"],
+  ["attendance","📅"],
+  ["advances","💰"],
+  ["reports","📈"],
+  ["whatsapp","💬"]
 ].map(([k,icon])=>(
   <button
     key={k}
@@ -420,16 +421,16 @@ Rockcity Call Taxi & Travels`;
 
       <div style={S.body}>
 
-        {/* -- DASHBOARD -- */}
+        {/* ── DASHBOARD ── */}
         {tab==="dashboard" && <>
           <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(130px,1fr))", gap:12, marginBottom:16 }}>
             {[
-              [T.totalEmployees, employees.length, t.navy, "??"],
-              ["Today Present", todayPresent, t.green, "?"],
-              [T.monthlySalary, "?"+grand.roundOff.toLocaleString(), t.blue, "??"],
-              [T.totalAdvance, "?"+totalAdv.toLocaleString(), t.red, "??"],
-              ["Travels", employees.filter(e=>e.dept==="Travels").length, "#c05621","??"],
-              ["Pharma", employees.filter(e=>e.dept==="Pharmaceutical").length, t.green,"??"],
+              [T.totalEmployees, employees.length, t.navy, "👥"],
+              ["Today Present", todayPresent, t.green, "✅"],
+              [T.monthlySalary, "₹"+grand.roundOff.toLocaleString(), t.blue, "💵"],
+              [T.totalAdvance, "₹"+totalAdv.toLocaleString(), t.red, "💰"],
+              ["Travels", employees.filter(e=>e.dept==="Travels").length, "#c05621","🚖"],
+              ["Pharma", employees.filter(e=>e.dept==="Pharmaceutical").length, t.green,"💊"],
             ].map(([lbl,val,col,icon])=>(
               <div key={lbl} style={S.statCard(col)}>
                 <div style={{ fontSize:18, marginBottom:4 }}>{icon}</div>
@@ -458,11 +459,11 @@ Rockcity Call Taxi & Travels`;
               <div key={dept} style={{ ...S.card, marginBottom:12, padding:"14px 16px" }}>
                 <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center" }}>
                   <div>
-                    <div style={{ fontWeight:700, fontSize:14, color:deptColor(dept) }}>{dept==="Travels"?"??":"??"} {dept}</div>
-                    <div style={{ fontSize:12, color:t.subtext, marginTop:2 }}>{dEmps.length} employees � {MONTHS[month]} {year}</div>
+                    <div style={{ fontWeight:700, fontSize:14, color:deptColor(dept) }}>{dept==="Travels"?"🚖":"💊"} {dept}</div>
+                    <div style={{ fontSize:12, color:t.subtext, marginTop:2 }}>{dEmps.length} employees — {MONTHS[month]} {year}</div>
                   </div>
                   <div style={{ textAlign:"right" }}>
-                    <div style={{ fontWeight:800, fontSize:18, color:deptColor(dept) }}>?{total.toLocaleString()}</div>
+                    <div style={{ fontWeight:800, fontSize:18, color:deptColor(dept) }}>₹{total.toLocaleString()}</div>
                     <div style={{ fontSize:10, color:t.subtext }}>Total Pay</div>
                   </div>
                 </div>
@@ -471,7 +472,7 @@ Rockcity Call Taxi & Travels`;
           })}
         </>}
 
-        {/* -- EMPLOYEES -- */}
+        {/* ── EMPLOYEES ── */}
         {tab==="employees" && <>
           <div style={S.row}>
             <select style={S.sel} value={deptFilter} onChange={e=>setDeptFilter(e.target.value)}>
@@ -488,7 +489,7 @@ Rockcity Call Taxi & Travels`;
                 <div style={{ flex:1, minWidth:0 }}>
                   <div style={{ fontWeight:700, fontSize:13, color:t.text }}>{emp.name}</div>
                   <div style={{ fontSize:11, color:t.subtext, marginTop:2 }}>
-                    {emp.empId} � {emp.mobile}
+                    {emp.empId} · {emp.mobile}
                   </div>
                   <div style={{ display:"flex", gap:5, marginTop:4, flexWrap:"wrap" }}>
                     <span style={S.badge(deptColor(emp.dept))}>{emp.dept}</span>
@@ -497,11 +498,11 @@ Rockcity Call Taxi & Travels`;
                   </div>
                 </div>
                 <div style={{ textAlign:"right", flexShrink:0 }}>
-                  <div style={{ fontWeight:700, color:t.navy, fontSize:13 }}>?{emp.basicSalary}</div>
+                  <div style={{ fontWeight:700, color:t.navy, fontSize:13 }}>₹{emp.basicSalary}</div>
                   <div style={{ fontSize:10, color:t.subtext }}>{emp.workingDays} days</div>
                   <div style={{ display:"flex", gap:5, marginTop:6 }}>
-                    <button style={S.btnSm(t.blue)} onClick={()=>openEdit(emp)}>??</button>
-                    <button style={S.btnSm(t.red)} onClick={()=>delEmp(emp.id)}>???</button>
+                    <button style={S.btnSm(t.blue)} onClick={()=>openEdit(emp)}>✏️</button>
+                    <button style={S.btnSm(t.red)} onClick={()=>delEmp(emp.id)}>🗑️</button>
                   </div>
                 </div>
               </div>
@@ -509,7 +510,7 @@ Rockcity Call Taxi & Travels`;
           </div>
         </>}
 
-        {/* -- SALARY SHEET -- */}
+        {/* ── SALARY SHEET ── */}
         {tab==="salary" && <>
           <div style={S.row} className="no-print">
             <select style={S.sel} value={deptFilter} onChange={e=>setDeptFilter(e.target.value)}>
@@ -521,13 +522,13 @@ Rockcity Call Taxi & Travels`;
             <select style={S.sel} value={year} onChange={e=>setYear(Number(e.target.value))}>
               {[2024,2025,2026,2027,2028,2029,2030,2031,2032].map(y=><option key={y} value={y}>{y}</option>)}
             </select>
-            <button style={S.btn(t.navy)} onClick={()=>window.print()}>??? {T.print}</button>
-            <button style={S.btn(WAD)} onClick={()=>{ setBulkSelected(rows.map(r=>r.emp.id)); setBulkModal(true); }}>?? {T.sendAll}</button>
+            <button style={S.btn(t.navy)} onClick={()=>window.print()}>🖨️ {T.print}</button>
+            <button style={S.btn(WAD)} onClick={()=>{ setBulkSelected(rows.map(r=>r.emp.id)); setBulkModal(true); }}>💬 {T.sendAll}</button>
           </div>
 
           <div style={S.card} className="print-area">
             <div style={{ padding:"10px 14px", background:t.navy, color:"#fff", textAlign:"center", fontWeight:700, fontSize:13 }}>
-              SALARY SHEET � {MONTHS[month].toUpperCase()} {year} {deptFilter!=="All"?� ${deptFilter}:""}
+              SALARY SHEET — {MONTHS[month].toUpperCase()} {year} {deptFilter!=="All"?— ${deptFilter}:""}
             </div>
             <div style={{ overflowX:"auto" }}>
               <table style={{ width:"100%", borderCollapse:"collapse", fontSize:11 }}>
@@ -544,7 +545,7 @@ Rockcity Call Taxi & Travels`;
                         <div style={{fontWeight:600}}>{emp.name}</div>
                         <div style={{fontSize:9,color:t.subtext}}>{emp.dept}</div>
                       </td>
-                      <td style={S.td(i)}>?{emp.basicSalary}</td>
+                      <td style={S.td(i)}>₹{emp.basicSalary}</td>
                       <td style={S.td(i)}>
                         <input style={S.inpWd} type="number" value={entry.workingDaysOverride||emp.workingDays}
                           onChange={e=>setField(emp.id,"workingDaysOverride",e.target.value)} title="Edit working days"/>
@@ -561,17 +562,17 @@ Rockcity Call Taxi & Travels`;
                       <td style={{...S.td(i),fontWeight:600}}>{calc.netSalary}</td>
                       <td style={{...S.td(i),background:dark?t.teal:"#e6fffa",fontWeight:800,color:t.navy,fontSize:12}}>{calc.roundOff||0}</td>
                       <td style={S.td(i)} className="no-print">
-                        <button style={S.btnSm("#25d366")} onClick={()=>setShareModal({emp,entry,calc,wd})}>??</button>
+                        <button style={S.btnSm("#25d366")} onClick={()=>setShareModal({emp,entry,calc,wd})}>📤</button>
                       </td>
                       <td style={S.td(i)} className="no-print">
-                        <button style={S.btnSm(WAD)} title={Send to ${emp.name}} onClick={()=>sendOneWA(emp,entry,calc,wd)}>??</button>
+                        <button style={S.btnSm(WAD)} title={Send to ${emp.name}} onClick={()=>sendOneWA(emp,entry,calc,wd)}>📲</button>
                       </td>
                     </tr>
                   ))}
                 </tbody>
                 <tfoot>
                   <tr>
-                    <td colSpan={13} style={{...S.th,textAlign:"right",paddingRight:10}}>TOTAL ?</td>
+                    <td colSpan={13} style={{...S.th,textAlign:"right",paddingRight:10}}>TOTAL →</td>
                     <td style={S.th}>{Math.round(grand.net)}</td>
                     <td style={{...S.th,color:"#ffd700",fontSize:13}}>{grand.roundOff}</td>
                     <td style={S.th} className="no-print"></td>
@@ -583,7 +584,7 @@ Rockcity Call Taxi & Travels`;
           </div>
         </>}
 
-        {/* -- ATTENDANCE -- */}
+        {/* ── ATTENDANCE ── */}
         {tab==="attendance" && <>
           <div style={S.row}>
             <select style={S.sel} value={deptFilter} onChange={e=>setDeptFilter(e.target.value)}>
@@ -600,7 +601,7 @@ Rockcity Call Taxi & Travels`;
           {/* Today quick mark */}
           <div style={{...S.card, marginBottom:12}}>
             <div style={{padding:"10px 14px", background:t.navy, color:"#fff", fontWeight:700, fontSize:12}}>
-              ?? Today � {todayStr} (Quick Mark)
+              📅 Today — {todayStr} (Quick Mark)
             </div>
             {filteredEmps.map((emp,i)=>(
               <div key={emp.id} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"9px 14px",borderBottom:1px solid ${t.border},background:i%2===0?t.card:t.rowAlt}}>
@@ -618,7 +619,7 @@ Rockcity Call Taxi & Travels`;
           {/* Monthly summary */}
           <div style={S.card}>
             <div style={{padding:"10px 14px",background:t.navy,color:"#fff",fontWeight:700,fontSize:12}}>
-              ?? {MONTHS[month]} {year} � Monthly Attendance Summary
+              📊 {MONTHS[month]} {year} — Monthly Attendance Summary
             </div>
             {filteredEmps.map((emp,i)=>{
               const pc = getPresentCount(emp.id);
@@ -628,9 +629,9 @@ Rockcity Call Taxi & Travels`;
                 <div key={emp.id} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"10px 14px",borderBottom:1px solid ${t.border},background:i%2===0?t.card:t.rowAlt}}>
                   <div style={{fontWeight:600,fontSize:12}}>{emp.name}</div>
                   <div style={{display:"flex",gap:10,fontSize:11}}>
-                    <span style={{color:t.green,fontWeight:700}}>? {pc}</span>
-                    <span style={{color:t.red,fontWeight:700}}>? {ac}</span>
-                    <span style={{color:"#c05621",fontWeight:700}}>?? {lc}</span>
+                    <span style={{color:t.green,fontWeight:700}}>✅ {pc}</span>
+                    <span style={{color:t.red,fontWeight:700}}>❌ {ac}</span>
+                    <span style={{color:"#c05621",fontWeight:700}}>🌿 {lc}</span>
                   </div>
                 </div>
               );
@@ -638,13 +639,13 @@ Rockcity Call Taxi & Travels`;
           </div>
         </>}
 
-        {/* -- ADVANCES -- */}
+        {/* ── ADVANCES ── */}
         {tab==="advances" && <>
           <div style={S.row}>
             <button style={S.btn(t.navy)} onClick={()=>setAdvModal(true)}>+ {T.giveAdvance}</button>
           </div>
           <div style={S.card}>
-            <div style={{padding:"10px 14px",background:t.navy,color:"#fff",fontWeight:700,fontSize:12}}>?? Advance History</div>
+            <div style={{padding:"10px 14px",background:t.navy,color:"#fff",fontWeight:700,fontSize:12}}>💰 Advance History</div>
             {employees.map(emp=>{
               const advList = advanceData[adv-${emp.id}]||[];
               if(!advList.length) return null;
@@ -653,12 +654,12 @@ Rockcity Call Taxi & Travels`;
                 <div key={emp.id} style={{borderBottom:1px solid ${t.border}}}>
                   <div style={{padding:"10px 14px",display:"flex",justifyContent:"space-between",background:t.rowAlt}}>
                     <div style={{fontWeight:700,fontSize:12,color:t.text}}>{emp.name} <span style={{fontSize:10,color:t.subtext}}>({emp.dept})</span></div>
-                    <div style={{fontWeight:800,color:t.red}}>?{total}</div>
+                    <div style={{fontWeight:800,color:t.red}}>₹{total}</div>
                   </div>
                   {advList.map(a=>(
                     <div key={a.id} style={{padding:"6px 24px",display:"flex",justifyContent:"space-between",fontSize:11,color:t.subtext,borderTop:1px solid ${t.border}}}>
-                      <span>{a.date} � {a.reason||"Advance"}</span>
-                      <span style={{fontWeight:700,color:t.navy}}>?{a.amount}</span>
+                      <span>{a.date} — {a.reason||"Advance"}</span>
+                      <span style={{fontWeight:700,color:t.navy}}>₹{a.amount}</span>
                     </div>
                   ))}
                 </div>
@@ -668,7 +669,7 @@ Rockcity Call Taxi & Travels`;
           </div>
         </>}
 
-        {/* -- REPORTS -- */}
+        {/* ── REPORTS ── */}
         {tab==="reports" && <>
           <div style={S.row}>
             <select style={S.sel} value={deptFilter} onChange={e=>setDeptFilter(e.target.value)}>
@@ -686,9 +687,9 @@ Rockcity Call Taxi & Travels`;
           <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(130px,1fr))",gap:12,marginBottom:16}}>
             {[
               [T.totalEmployees, filteredEmps.length, t.navy],
-              ["Total Round OFF", "?"+grand.roundOff.toLocaleString(), t.green],
-              ["Net Salary", "?"+Math.round(grand.net).toLocaleString(), t.blue],
-              ["Deductions", "?"+Math.round(grand.ded).toLocaleString(), t.red],
+              ["Total Round OFF", "₹"+grand.roundOff.toLocaleString(), t.green],
+              ["Net Salary", "₹"+Math.round(grand.net).toLocaleString(), t.blue],
+              ["Deductions", "₹"+Math.round(grand.ded).toLocaleString(), t.red],
             ].map(([l,v,c])=>(
               <div key={l} style={S.statCard(c)}>
                 <div style={{fontSize:11,color:t.subtext,fontWeight:600}}>{l}</div>
@@ -700,34 +701,34 @@ Rockcity Call Taxi & Travels`;
           {/* Per employee */}
           <div style={S.card}>
             <div style={{padding:"10px 14px",background:t.navy,color:"#fff",fontWeight:700,fontSize:12}}>
-              ?? {MONTHS[month]} {year} � Employee Report
+              📋 {MONTHS[month]} {year} — Employee Report
             </div>
             {rows.map(({emp,entry,calc,wd},i)=>(
               <div key={emp.id} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"10px 14px",borderBottom:1px solid ${t.border},background:i%2===0?t.card:t.rowAlt}}>
                 <div>
                   <div style={{fontWeight:600,fontSize:13}}>{emp.name}</div>
-                  <div style={{fontSize:11,color:t.subtext}}>Gross: ?{calc.grossSalary} � Ded: ?{calc.totalDeduction}</div>
+                  <div style={{fontSize:11,color:t.subtext}}>Gross: ₹{calc.grossSalary} · Ded: ₹{calc.totalDeduction}</div>
                   <span style={S.badge(deptColor(emp.dept))}>{emp.dept}</span>
                 </div>
                 <div style={{display:"flex",gap:8,alignItems:"center"}}>
                   <div style={{textAlign:"right"}}>
-                    <div style={{fontWeight:800,fontSize:15,color:t.navy}}>?{calc.roundOff}</div>
+                    <div style={{fontWeight:800,fontSize:15,color:t.navy}}>₹{calc.roundOff}</div>
                     <div style={{fontSize:10,color:t.subtext}}>Net Pay</div>
                   </div>
-                  <button style={S.btnSm("#25d366")} onClick={()=>setShareModal({emp,entry,calc,wd})}>??</button>
-                  <button style={S.btnSm(WAD)} onClick={()=>sendOneWA(emp,entry,calc,wd)}>??</button>
-                  <button style={S.btnSm(t.blue)} onClick={()=>setSlipModal({emp,entry,calc,wd})}>??</button>
+                  <button style={S.btnSm("#25d366")} onClick={()=>setShareModal({emp,entry,calc,wd})}>📤</button>
+                  <button style={S.btnSm(WAD)} onClick={()=>sendOneWA(emp,entry,calc,wd)}>📲</button>
+                  <button style={S.btnSm(t.blue)} onClick={()=>setSlipModal({emp,entry,calc,wd})}>📄</button>
                 </div>
               </div>
             ))}
           </div>
         </>}
 
-        {/* -- WHATSAPP TAB -- */}
+        {/* ── WHATSAPP TAB ── */}
         {tab==="whatsapp" && <>
           <div style={{...S.card, marginBottom:14}}>
             <div style={{padding:"14px 16px", background:linear-gradient(135deg,${WAD},${WA}), color:"#fff"}}>
-              <div style={{fontWeight:700,fontSize:16}}>?? WhatsApp Salary Sender</div>
+              <div style={{fontWeight:700,fontSize:16}}>💬 WhatsApp Salary Sender</div>
               <div style={{fontSize:11,opacity:0.85,marginTop:3}}>Send individual or bulk salary slips directly via WhatsApp</div>
             </div>
             <div style={{padding:14}}>
@@ -737,14 +738,14 @@ Rockcity Call Taxi & Travels`;
                 <select style={S.sel} value={year} onChange={e=>setYear(Number(e.target.value))}>{[2024,2025,2026,2027,2028,2029,2030].map(y=><option key={y} value={y}>{y}</option>)}</select>
               </div>
               <div style={S.row}>
-                <button style={S.btn(WA)} onClick={selectAllBulk}>?? {T.selectAll}</button>
-                <button style={S.btn("#94a3b8")} onClick={clearBulkSelect}>?? {T.clear}</button>
+                <button style={S.btn(WA)} onClick={selectAllBulk}>☑️ {T.selectAll}</button>
+                <button style={S.btn("#94a3b8")} onClick={clearBulkSelect}>✖️ {T.clear}</button>
                 <button style={{...S.btn(WAD),padding:"8px 18px",fontSize:13}} disabled={bulkSelected.length===0} onClick={()=>setBulkModal(true)}>
-                  ?? {T.sendAll} {bulkSelected.length>0?(${bulkSelected.length}):""}
+                  💬 {T.sendAll} {bulkSelected.length>0?(${bulkSelected.length}):""}
                 </button>
               </div>
               <div style={{fontSize:12,color:t.subtext}}>
-                ? {bulkSelected.length} selected � {MONTHS[month]} {year}
+                ✅ {bulkSelected.length} selected — {MONTHS[month]} {year}
               </div>
             </div>
           </div>
@@ -757,18 +758,18 @@ Rockcity Call Taxi & Travels`;
                 <div key={emp.id} style={{display:"flex",gap:12,alignItems:"center",padding:"12px 14px",borderBottom:1px solid ${t.border},background:selected?(dark?"#0f3460":"#e6fffa"):(i%2===0?t.card:t.rowAlt),cursor:"pointer"}}
                   onClick={()=>toggleBulkSelect(emp.id)}>
                   <div style={{width:22,height:22,borderRadius:6,border:2px solid ${selected?WA:t.border},background:selected?WA:"transparent",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>
-                    {selected && <span style={{color:"#fff",fontSize:14,fontWeight:900}}>?</span>}
+                    {selected && <span style={{color:"#fff",fontSize:14,fontWeight:900}}>✓</span>}
                   </div>
                   <div style={{width:36,height:36,borderRadius:"50%",background:deptColor(emp.dept),display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontWeight:700,fontSize:13,flexShrink:0}}>{emp.name.charAt(0)}</div>
                   <div style={{flex:1,minWidth:0}}>
                     <div style={{fontWeight:700,fontSize:13}}>{emp.name}</div>
-                    <div style={{fontSize:11,color:t.subtext}}>?? {emp.mobile||"�"} � {emp.dept}</div>
-                    {!hasPhone && <div style={{fontSize:10,color:t.red,marginTop:2}}>?? {T.noMobile}</div>}
+                    <div style={{fontSize:11,color:t.subtext}}>📱 {emp.mobile||"—"} · {emp.dept}</div>
+                    {!hasPhone && <div style={{fontSize:10,color:t.red,marginTop:2}}>⚠️ {T.noMobile}</div>}
                   </div>
                   <div style={{textAlign:"right",flexShrink:0}}>
-                    <div style={{fontWeight:800,fontSize:14,color:WA}}>?{calc.roundOff}</div>
+                    <div style={{fontWeight:800,fontSize:14,color:WA}}>₹{calc.roundOff}</div>
                     <div style={{fontSize:10,color:t.subtext,marginBottom:5}}>Net Pay</div>
-                    <button style={S.btnSm(WAD)} onClick={e=>{e.stopPropagation(); sendOneWA(emp,entry,calc,wd);}}>?? Send</button>
+                    <button style={S.btnSm(WAD)} onClick={e=>{e.stopPropagation(); sendOneWA(emp,entry,calc,wd);}}>📲 Send</button>
                   </div>
                 </div>
               );
@@ -778,7 +779,7 @@ Rockcity Call Taxi & Travels`;
           {bulkSelected.length>0 && (
             <div style={{position:"sticky",bottom:12,marginTop:14,textAlign:"center"}}>
               <button style={{...S.btn(WAD),padding:"12px 28px",fontSize:14,borderRadius:30,boxShadow:"0 4px 20px rgba(18,140,126,0.5)"}} onClick={()=>setBulkModal(true)}>
-                ?? {T.sendAll} ({bulkSelected.length})
+                💬 {T.sendAll} ({bulkSelected.length})
               </button>
             </div>
           )}
@@ -790,10 +791,10 @@ Rockcity Call Taxi & Travels`;
         <div style={S.modal}>
           <div style={{...S.mBox,maxWidth:400}}>
             <div style={{background:linear-gradient(135deg,${WAD},${WA}),color:"#fff",padding:"14px 16px",borderRadius:"8px 8px 0 0",margin:"-20px -20px 16px",fontWeight:700,textAlign:"center",fontSize:15}}>
-              ?? WhatsApp Bulk Send
+              💬 WhatsApp Bulk Send
             </div>
             <div style={{fontSize:13,marginBottom:12}}>
-              <b>{bulkSelected.length}</b> employees � <b>{MONTHS[month]} {year}</b> salary slips
+              <b>{bulkSelected.length}</b> employees — <b>{MONTHS[month]} {year}</b> salary slips
             </div>
             <div style={{maxHeight:220,overflowY:"auto",marginBottom:12}}>
               {rows.filter(r=>bulkSelected.includes(r.emp.id)).map(({emp,calc})=>{
@@ -802,18 +803,18 @@ Rockcity Call Taxi & Travels`;
                   <div key={emp.id} style={{display:"flex",justifyContent:"space-between",padding:"8px 10px",borderBottom:1px solid ${t.border},fontSize:12}}>
                     <div>
                       <span style={{fontWeight:600}}>{emp.name}</span>
-                      <div style={{fontSize:10,color:hasPhone?t.subtext:t.red}}>?? {hasPhone?emp.mobile:"?? "+T.noMobile}</div>
+                      <div style={{fontSize:10,color:hasPhone?t.subtext:t.red}}>📱 {hasPhone?emp.mobile:"⚠️ "+T.noMobile}</div>
                     </div>
-                    <div style={{fontWeight:700,color:WA}}>?{calc.roundOff}</div>
+                    <div style={{fontWeight:700,color:WA}}>₹{calc.roundOff}</div>
                   </div>
                 );
               })}
             </div>
             <div style={{background:t.rowAlt,borderRadius:8,padding:"10px 12px",fontSize:11,color:t.subtext,marginBottom:14}}>
-              ?? Each WhatsApp chat opens one-by-one with a 2.5s gap. Allow pop-ups if blocked.
+              ℹ️ Each WhatsApp chat opens one-by-one with a 2.5s gap. Allow pop-ups if blocked.
             </div>
             <div style={{display:"flex",gap:10,flexWrap:"wrap"}}>
-              <button style={{...S.btn(WA),padding:"9px 20px",fontSize:13}} onClick={startBulkSend}>?? {T.startSending} ({bulkSelected.length})</button>
+              <button style={{...S.btn(WA),padding:"9px 20px",fontSize:13}} onClick={startBulkSend}>💬 {T.startSending} ({bulkSelected.length})</button>
               <button style={S.btnOut} onClick={()=>setBulkModal(false)}>{T.cancel}</button>
             </div>
           </div>
@@ -823,7 +824,7 @@ Rockcity Call Taxi & Travels`;
       {/* Bulk progress bar */}
       {bulkProgress && (
         <div style={S.progressBar}>
-          <div style={{fontSize:20}}>??</div>
+          <div style={{fontSize:20}}>💬</div>
           <div style={{flex:1}}>
             <div style={{fontWeight:700,fontSize:13}}>Sending... {bulkProgress.current}/{bulkProgress.total}</div>
             <div style={{fontSize:11,opacity:0.85}}>{bulkProgress.name}</div>
@@ -835,7 +836,7 @@ Rockcity Call Taxi & Travels`;
       )}
         <div style={S.modal}>
           <div style={S.mBox}>
-            <h3 style={{margin:"0 0 14px",fontSize:15,color:t.navy}}>{editEmp??? ${T.editEmployee}:? ${T.addEmployee}}</h3>
+            <h3 style={{margin:"0 0 14px",fontSize:15,color:t.navy}}>{editEmp?✏️ ${T.editEmployee}:➕ ${T.addEmployee}}</h3>
             {[
               ["name",T.name,"text","Mr./Mrs. Name"],
               ["empId",T.empId,"text","RC001"],
@@ -858,7 +859,7 @@ Rockcity Call Taxi & Travels`;
               </div>
             ))}
             <div style={{display:"flex",gap:10,marginTop:4}}>
-              <button style={S.btn(t.navy)} onClick={saveEmp}>?? {T.save}</button>
+              <button style={S.btn(t.navy)} onClick={saveEmp}>💾 {T.save}</button>
               <button style={S.btnOut} onClick={()=>setEmpModal(false)}>{T.cancel}</button>
             </div>
           </div>
@@ -869,20 +870,20 @@ Rockcity Call Taxi & Travels`;
       {advModal && (
         <div style={S.modal}>
           <div style={S.mBox}>
-            <h3 style={{margin:"0 0 14px",fontSize:15,color:t.navy}}>?? {T.giveAdvance}</h3>
+            <h3 style={{margin:"0 0 14px",fontSize:15,color:t.navy}}>💰 {T.giveAdvance}</h3>
             <label style={S.lbl}>Employee</label>
             <select style={{...S.mInp}} value={advForm.empId} onChange={e=>setAdvForm(p=>({...p,empId:e.target.value}))}>
               <option value="">Select Employee</option>
               {employees.map(e=><option key={e.id} value={e.id}>{e.name} ({e.dept})</option>)}
             </select>
-            <label style={S.lbl}>{T.amount} (?)</label>
+            <label style={S.lbl}>{T.amount} (₹)</label>
             <input style={S.mInp} type="number" value={advForm.amount} onChange={e=>setAdvForm(p=>({...p,amount:e.target.value}))} placeholder="Amount"/>
             <label style={S.lbl}>{T.reason}</label>
             <input style={S.mInp} value={advForm.reason} onChange={e=>setAdvForm(p=>({...p,reason:e.target.value}))} placeholder="Reason"/>
             <label style={S.lbl}>{T.date}</label>
             <input style={S.mInp} type="date" value={advForm.date} onChange={e=>setAdvForm(p=>({...p,date:e.target.value}))}/>
             <div style={{display:"flex",gap:10}}>
-              <button style={S.btn(t.green)} onClick={giveAdvance}>? {T.save}</button>
+              <button style={S.btn(t.green)} onClick={giveAdvance}>✅ {T.save}</button>
               <button style={S.btnOut} onClick={()=>setAdvModal(false)}>{T.cancel}</button>
             </div>
           </div>
@@ -893,11 +894,11 @@ Rockcity Call Taxi & Travels`;
       {shareModal && (
         <div style={S.modal}>
           <div style={{...S.mBox,maxWidth:380}}>
-            <h3 style={{margin:"0 0 12px",fontSize:14,color:t.navy}}>?? {T.salarySlip} � {shareModal.emp.name}</h3>
+            <h3 style={{margin:"0 0 12px",fontSize:14,color:t.navy}}>📤 {T.salarySlip} — {shareModal.emp.name}</h3>
             <div style={S.slipBox}>{slipText(shareModal.emp,shareModal.entry,shareModal.calc,shareModal.wd)}</div>
             <div style={{display:"flex",gap:10,flexWrap:"wrap"}}>
               <button style={S.btn("#25d366")} onClick={()=>doShare(shareModal.emp,shareModal.entry,shareModal.calc,shareModal.wd)}>
-                {navigator.share?"?? WhatsApp / Share":"?? Copy"}
+                {navigator.share?"📤 WhatsApp / Share":"📋 Copy"}
               </button>
               <button style={S.btnOut} onClick={()=>setShareModal(null)}>{T.close}</button>
             </div>
@@ -910,7 +911,7 @@ Rockcity Call Taxi & Travels`;
         <div style={S.modal}>
           <div style={{...S.mBox,maxWidth:360}}>
             <div style={{background:t.navy,color:"#fff",padding:"12px 16px",borderRadius:"8px 8px 0 0",margin:"-20px -20px 16px",fontWeight:700,textAlign:"center"}}>
-              ?? SALARY SLIP
+              💼 SALARY SLIP
             </div>
             {[
               ["Employee",slipModal.emp.name],
@@ -918,17 +919,17 @@ Rockcity Call Taxi & Travels`;
               ["Department",slipModal.emp.dept],
               ["Designation",slipModal.emp.designation],
               ["Month",${MONTHS[month]} ${year}],
-              ["Basic Salary",?${slipModal.emp.basicSalary}],
+              ["Basic Salary",₹${slipModal.emp.basicSalary}],
               ["Working Days",slipModal.wd],
               ["Present Days",slipModal.entry.presentDays||0],
-              ["Salary for Month",?${slipModal.calc.salaryForMonth}],
-              ["Collection",?${slipModal.entry.collection||0}],
-              ["DB",?${slipModal.entry.db||0}],
-              ["Gross Salary",?${slipModal.calc.grossSalary}],
-              ["PF",?${slipModal.entry.pf||0}],
-              ["GF",?${slipModal.entry.gf||0}],
-              ["Advance",?${slipModal.entry.salaryAdvance||0}],
-              ["Total Deduction",?${slipModal.calc.totalDeduction}],
+              ["Salary for Month",₹${slipModal.calc.salaryForMonth}],
+              ["Collection",₹${slipModal.entry.collection||0}],
+              ["DB",₹${slipModal.entry.db||0}],
+              ["Gross Salary",₹${slipModal.calc.grossSalary}],
+              ["PF",₹${slipModal.entry.pf||0}],
+              ["GF",₹${slipModal.entry.gf||0}],
+              ["Advance",₹${slipModal.entry.salaryAdvance||0}],
+              ["Total Deduction",₹${slipModal.calc.totalDeduction}],
             ].map(([k,v])=>(
               <div key={k} style={{display:"flex",justifyContent:"space-between",padding:"6px 0",borderBottom:1px solid ${t.border},fontSize:12}}>
                 <span style={{color:t.subtext}}>{k}</span>
@@ -937,10 +938,10 @@ Rockcity Call Taxi & Travels`;
             ))}
             <div style={{display:"flex",justifyContent:"space-between",padding:"12px 0",fontSize:16,fontWeight:800,color:t.navy}}>
               <span>NET SALARY</span>
-              <span>?{slipModal.calc.roundOff}</span>
+              <span>₹{slipModal.calc.roundOff}</span>
             </div>
             <div style={{display:"flex",gap:10,marginTop:8}}>
-              <button style={S.btn("#25d366")} onClick={()=>{setShareModal(slipModal);setSlipModal(null);}}>?? Share</button>
+              <button style={S.btn("#25d366")} onClick={()=>{setShareModal(slipModal);setSlipModal(null);}}>📤 Share</button>
               <button style={S.btnOut} onClick={()=>setSlipModal(null)}>{T.close}</button>
             </div>
           </div>
